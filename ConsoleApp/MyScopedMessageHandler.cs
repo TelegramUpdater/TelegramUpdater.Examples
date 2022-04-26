@@ -6,7 +6,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace ConsoleApp;
 
-[Command("test"), ChatType(ChatTypeFlags.Private)]
+[Command(command:"test"), ChatType(ChatTypeFlags.Private)]
 internal class MyScopedMessageHandler : MessageHandler
 {
     public MyScopedMessageHandler() : base(group: 0)

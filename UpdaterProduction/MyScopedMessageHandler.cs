@@ -6,7 +6,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace UpdaterProduction;
 
-[Command("test"), Private]
+[Command(command:"test"), Private]
 internal class MyScopedMessageHandler : MessageHandler
 {
     public MyScopedMessageHandler() : base(group: -1)
@@ -18,7 +18,7 @@ internal class MyScopedMessageHandler : MessageHandler
             replyMarkup: new InlineKeyboardMarkup(
                 InlineKeyboardButton.WithCallbackData("Yes i'm OK!", "ok")));
 
-        await container.ChannelUserClick(TimeSpan.FromSeconds(5), new("ok"))
+        await container.ChannelButtonClickAsync(TimeSpan.FromSeconds(5), new("ok"))
             .IfNotNull(async answer =>
             {
                 await answer.EditAsync(text: "Well ...");

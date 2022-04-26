@@ -6,7 +6,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace QuickestPossible.UpdateHandlers.Messages
 {
-    [Command("ok")]
+    [Command(command:"ok")]
     internal sealed class StartCommandHandler : MessageHandler
     {
         protected override async Task HandleAsync(IContainer<Message> cntr)
@@ -16,7 +16,7 @@ namespace QuickestPossible.UpdateHandlers.Messages
                     x.AddItem(InlineKeyboardButton.WithCallbackData("Yes"))
                     .AddItem(InlineKeyboardButton.WithCallbackData("No"))));
 
-            var callback = await cntr.ChannelUserClick(TimeSpan.FromMinutes(30), new(@"Yes|No"));
+            var callback = await cntr.ChannelButtonClickAsync(TimeSpan.FromMinutes(30), new(@"Yes|No"));
 
             if (callback is not null)
             {

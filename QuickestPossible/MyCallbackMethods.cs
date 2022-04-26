@@ -8,7 +8,7 @@ namespace QuickestPossible;
 
 internal static class MyCallbackMethods
 {
-    [Command("start"), Private]
+    [Command(command:"start"), Private]
     [SingletonHandlerCallback(UpdateType.Message)]
     public static async Task MyHandlerCallback(IContainer<Message> container)
     {

@@ -7,7 +7,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace WorkerService;
 
-[Command("hello"), Private]
+[Command(command:"hello"), Private]
 public class SimpleMessageHandler : MessageHandler
 {
     protected override async Task HandleAsync(IContainer<Message> container)
@@ -16,7 +16,7 @@ public class SimpleMessageHandler : MessageHandler
             replyMarkup: new InlineKeyboardMarkup(
                 InlineKeyboardButton.WithCallbackData("Yes i'm OK!", "ok")));
 
-        await container.ChannelUserClick(
+        await container.ChannelButtonClickAsync(
                 TimeSpan.FromSeconds(5), new CallbackQueryRegex("ok"))
             .IfNotNull(async answer =>
             {

@@ -6,7 +6,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace UpdaterProduction;
 
-[Command("about"), Private]
+[Command(command:"about"), Private]
 internal class AboutMessageHandler : MessageHandler
 {
     protected override async Task HandleAsync(IContainer<Message> container)
