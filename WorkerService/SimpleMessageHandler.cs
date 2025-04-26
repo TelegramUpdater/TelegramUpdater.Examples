@@ -20,11 +20,11 @@ public class SimpleMessageHandler : MessageHandler
                 TimeSpan.FromSeconds(5), new CallbackQueryRegex("ok"))
             .IfNotNull(async answer =>
             {
-                await answer.EditAsync(text: "Well ...");
+                await answer.EditAsync(text: "Well done!");
             })
             .Else(async _ =>
             {
-                await container.ResponseAsync("Slow", sendAsReply: false);
+                await container.EditAsync("Slow...");
             });
     }
 }

@@ -14,7 +14,7 @@ var updater = new UpdaterBuilder(
                                       // Eg: first 10 updates are answers quickly, but others should wait
                                       // for any of that 10 to be done.
 
-        allowedUpdates: new[] { UpdateType.Message, UpdateType.CallbackQuery })
+        allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery])
 
     .StepTwo(inherit: false) // Add default exception handler
 
@@ -24,10 +24,8 @@ var updater = new UpdaterBuilder(
             updater.Logger.LogWarning(exception: ex, "Handler has entity parsing error!");
             return Task.CompletedTask;
         },
-        allowedHandlers: new[]
-        {
-            typeof(MyScopedMessageHandler)
-        }))
+        allowedHandlers: [typeof(MyScopedMessageHandler)]
+    ))
 
     .StepThree( // Quick handler
         async container => await container.ResponseAsync("Started!"),

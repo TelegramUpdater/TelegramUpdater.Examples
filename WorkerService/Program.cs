@@ -5,15 +5,18 @@ using TelegramUpdater.Hosting;
 using WorkerService;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((builder, services) =>
     {
+        var botToken = builder.Configuration.GetSection("TelegramUpdater:BotToken")
+            .Get<string>() ?? throw new InvalidOperationException("Bot token not found.");
+
         services.AddTelegramUpdater(
-            "BOT_TOKEN",
+            botToken,
             new UpdaterOptions(
                 maxDegreeOfParallelism: 10, // maximum update process tasks count at the same time
                                             // Eg: first 10 updates are answers quickly, but others should wait
                                             // for any of that 10 to be done.
-                allowedUpdates: new[] { UpdateType.Message, UpdateType.CallbackQuery }),
+                allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery]),
 
             (builder) => builder
                 .AddScopedUpdateHandler<SimpleMessageHandler, Message>()

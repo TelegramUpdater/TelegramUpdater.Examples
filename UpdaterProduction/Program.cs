@@ -15,9 +15,10 @@ var updater = new UpdaterBuilder(
                                       // Eg: first 10 updates are answers quickly, but others should wait
                                       // for any of that 10 to be done.
 
-        allowedUpdates: new[] { UpdateType.Message, UpdateType.CallbackQuery })
+        allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery])
 
-    .StepTwo(inherit: false)
+    // TODO:
+    //.StepTwo(inherit: false)
 
     .StepTwo(CommonExceptions.ParsingException(
         (updater, ex) =>
@@ -25,11 +26,11 @@ var updater = new UpdaterBuilder(
             updater.Logger.LogWarning(exception: ex, "Handler has entity parsing error!");
             return Task.CompletedTask;
         },
-        allowedHandlers: new[]
-        {
+        allowedHandlers:
+        [
             typeof(AboutMessageHandler),
             typeof(MyScopedMessageHandler)
-        }))
+        ]))
 
     .StepThree(
         async container => await container.ResponseAsync("Started!"),
