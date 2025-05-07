@@ -16,7 +16,7 @@ var updater = new UpdaterBuilder(
 
         allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery])
 
-    .StepTwo(inherit: false) // Add default exception handler
+    //.StepTwo(inherit: false) // Add default exception handler
 
     .StepTwo(CommonExceptions.ParsingException( // Add custom exception handler
         (updater, ex) =>
@@ -28,15 +28,15 @@ var updater = new UpdaterBuilder(
     ))
 
     .StepThree( // Quick handler
-        async container => await container.ResponseAsync("Started!"),
-        FilterCutify.OnCommand("start"))
+        async container => await container.Response("Started!"),
+        ReadyFilters.OnCommand("start"))
 
-    .AddScopedUpdateHandler<MyScopedMessageHandler, Message>(); // Scoped handler
+    .AddScopedUpdateHandler<MyScopedMessageHandler>(UpdateType.Message); // Scoped handler
 
 
 // ---------- Start! ----------
 
-var me = await updater.GetMeAsync();
+var me = await updater.GetMe();
 updater.Logger.LogInformation("Start listening to {username}", me.Username);
 
-await updater.StartAsync(); // 🔥 Fire up and block!
+await updater.Start(); // 🔥 Fire up and block!

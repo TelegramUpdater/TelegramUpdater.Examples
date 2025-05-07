@@ -33,18 +33,17 @@ var updater = new UpdaterBuilder(
         ]))
 
     .StepThree(
-        async container => await container.ResponseAsync("Started!"),
-        FilterCutify.OnCommand("start"))
+        async container => await container.Response("Started!"),
+        ReadyFilters.OnCommand("start"))
 
-    .AddScopedUpdateHandler<MyScopedMessageHandler, Message>()
+    .AddScopedUpdateHandler<MyScopedMessageHandler>(UpdateType.Message)
 
-    .AddScopedUpdateHandler<Message>(typeof(AboutMessageHandler)); // Other way
-                                                             // Can be done with: updater.AddScopedMessage<AboutMessageHandler>();
+    .AddScopedUpdateHandler<Message>(typeof(AboutMessageHandler), UpdateType.Message); // Other way
 
 
 // ---------- Start! ----------
 
-var me = await updater.GetMeAsync();
+var me = await updater.GetMe();
 updater.Logger.LogInformation("Start listening to {username}", me.Username);
 
-await updater.StartAsync(); // 🔥 Fire up and block!
+await updater.Start(); // 🔥 Fire up and block!

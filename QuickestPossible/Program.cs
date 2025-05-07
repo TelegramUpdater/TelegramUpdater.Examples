@@ -4,10 +4,10 @@ using TelegramUpdater;
 
 var updater = new Updater(
     new TelegramBotClient("BotToken"),
-    new UpdaterOptions(allowedUpdates: new[] { UpdateType.Message, UpdateType.CallbackQuery }))
+    new UpdaterOptions(allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery]))
 
     .AddDefaultExceptionHandler()
     .AutoCollectScopedHandlers()
     .CollectSingletonUpdateHandlerCallbacks();
 
-await updater.StartAsync();
+await updater.Start();

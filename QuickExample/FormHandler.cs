@@ -3,6 +3,7 @@ using TelegramUpdater;
 using TelegramUpdater.FillMyForm;
 using TelegramUpdater.FillMyForm.CancelTriggers.SealedTriggers;
 using TelegramUpdater.UpdateContainer;
+using TelegramUpdater.UpdateContainer.UpdateContainers;
 using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace QuickExample;
@@ -10,7 +11,7 @@ namespace QuickExample;
 [ApplyFilter(typeof(FormStartFilter))]
 internal class FormHandler : MessageHandler
 {
-    protected override async Task HandleAsync(IContainer<Message> updateContainer)
+    protected override async Task HandleAsync(MessageContainer updateContainer)
     {
         var filler = new FormFiller<MySimpleForm>(
             updateContainer.Updater,
@@ -20,16 +21,16 @@ internal class FormHandler : MessageHandler
 
         if (form is not null)
         {
-            await updateContainer.ResponseAsync($"Thank you, {form}");
+            await updateContainer.Response($"Thank you, {form}");
         }
         else
         {
-            await updateContainer.ResponseAsync($"Please try again later.");
+            await updateContainer.Response($"Please try again later.");
         }
     }
 }
 
-class FormStartFilter : Filter<Message>
+class FormStartFilter : UpdaterFilter<Message>
 {
-    public FormStartFilter() : base(FilterCutify.OnCommand("form")) { }
+    public FormStartFilter() : base(ReadyFilters.OnCommand("form")) { }
 }

@@ -7,7 +7,8 @@ using Telegram.Bot.Types.Enums;
 using TelegramUpdater;
 using TelegramUpdater.FillMyForm;
 using TelegramUpdater.FillMyForm.CancelTriggers.SealedTriggers;
-using TelegramUpdater.FillMyForm.UpdateCrackers.SealedCrackers;
+using TelegramUpdater.FillMyForm.UpdateCrackers.Crackers;
+using TelegramUpdater.Filters;
 using TelegramUpdater.UpdateChannels.ReadyToUse;
 using TelegramUpdater.UpdateContainer;
 
@@ -15,15 +16,14 @@ using TelegramUpdater.UpdateContainer;
 await new Updater(new TelegramBotClient("BOT_TOKEN"))
     .AddExceptionHandler<Exception>(HandleException, inherit: true) // Catch all exceptions in handlers
     .AddSingletonUpdateHandler(
-        UpdateType.Message, HandleUpdate, FilterCutify.OnCommand("survey")) // handle command /survey
-    .StartAsync(); // Start.
-
+        UpdateType.Message, HandleUpdate, ReadyFilters.OnCommand("survey")) // handle command /survey
+    .Start(); // Start.
 
 // Callback function to handle /survey command.
 async Task HandleUpdate(IContainer<Message> ctnr)
 {
     var callbackCancelTrigger = new CallbackQueryCancelTrigger(
-        FilterCutify.DataMatches("^cancel$")); // Cancellation will trigger on "cancel" callback data.
+        new MyCallbackQueryRegexFilter("^cancel$")); // Cancellation will trigger on "cancel" callback data.
 
     var filler = new FormFiller<SimpleSurvey>(
         ctnr.Updater,
@@ -34,7 +34,7 @@ async Task HandleUpdate(IContainer<Message> ctnr)
             new CallbackQueryCracker<HowLovelyWeAre>(       // 2. Create a cracker
                 new CallbackQueryChannel(                   //      2-1. Use channels to get matching update
                     TimeSpan.FromSeconds(30),               //          2-1-1. A time out for waiting time
-                    FilterCutify.DataMatches(@"^HLWA_")),   //          2-1-2. A filter to match callback data with given regex
+                    ReadyFilters.DataMatches(@"^HLWA_")),   //          2-1-2. A filter to match callback data with given regex
                 x => x.ToHowLovelyWeAre(),                  //      2-2. Extract a value for the propery from update.
                 callbackCancelTrigger)                      //      2-3. Add a cancel trigger.
             )
@@ -44,7 +44,7 @@ async Task HandleUpdate(IContainer<Message> ctnr)
             new CallbackQueryCracker<FoundFromWhere>(       // Same.
                 new CallbackQueryChannel(
                     TimeSpan.FromSeconds(30),
-                    FilterCutify.DataMatches(@"^FFW_")),
+                    ReadyFilters.DataMatches(@"^FFW_")),
                 x => x.ToFoundFromWhere(),
                 callbackCancelTrigger)));
 
@@ -53,11 +53,11 @@ async Task HandleUpdate(IContainer<Message> ctnr)
 
     if (form is not null) // Form got filled.
     {
-        await ctnr.ResponseAsync($"Thank you, {form}");
+        await ctnr.Response($"Thank you, {form}");
     }
     else // Something is wrong
     {
-        await ctnr.ResponseAsync($"Please try again later.");
+        await ctnr.Response($"Please try again later.");
     }
 }
 
@@ -66,4 +66,14 @@ static Task HandleException(IUpdater updater, Exception exception)
 {
     updater.Logger.LogError(exception: exception, "Error in handlers");
     return Task.CompletedTask;
+}
+
+class MyCallbackQueryRegexFilter(string pattern): Filter<CallbackQuery>()
+{
+    public override bool TheyShellPass(CallbackQuery input)
+    {
+        if (input.Data is null) return false;
+
+        return new StringRegex(pattern).TheyShellPass(input.Data);
+    }
 }

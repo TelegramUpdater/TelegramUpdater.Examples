@@ -33,31 +33,31 @@ namespace SurveyBot
         }
 
         public override async Task OnBeginAskAsync<TForm>(
-            FormFillterContext<TForm> fillterContext, CancellationToken cancellationToken)
+            FormFillerContext<TForm> fillerContext, CancellationToken cancellationToken)
         {
-            if (fillterContext.PropertyName == "HowLovelyWeAre")
+            if (fillerContext.PropertyName == "HowLovelyWeAre")
             {
-                await fillterContext.SendTextMessageAsync(
+                await fillerContext.SendMessage(
                     "How much do you love us?",
                     replyMarkup: Extensions.HowLovelyWeAreButtons(),
                     cancellationToken: cancellationToken);
             }
             else
             {
-                await fillterContext.SendTextMessageAsync(
+                await fillerContext.SendMessage(
                     "Where did you find us?",
                     replyMarkup: Extensions.HowFoundFromWhereButtons(),
                     cancellationToken: cancellationToken);
             }
         }
 
-        public override async Task OnSuccessAsync<TForm>(FormFillterContext<TForm> fillterContext, OnSuccessContext onSuccessContext, CancellationToken cancellationToken)
+        public override async Task OnSuccessAsync<TForm>(FormFillerContext<TForm> fillerContext, OnSuccessContext onSuccessContext, CancellationToken cancellationToken)
         {
             switch (onSuccessContext)
             {
-                case { ShiningInfo: { Value: { CallbackQuery: { Message: { } msg } } } }:
+                case { ShiningInfo.Value.CallbackQuery.Message: { } msg }:
                     {
-                        await fillterContext.TelegramBotClient.DeleteMessageAsync(
+                        await fillerContext.TelegramBotClient.DeleteMessage(
                             msg.Chat.Id, msg.MessageId, cancellationToken: cancellationToken);
                         break;
                     }

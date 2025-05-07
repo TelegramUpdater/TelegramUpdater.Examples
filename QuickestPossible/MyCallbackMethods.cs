@@ -12,6 +12,6 @@ internal static class MyCallbackMethods
     [SingletonHandlerCallback(UpdateType.Message)]
     public static async Task MyHandlerCallback(IContainer<Message> container)
     {
-        await container.ResponseAsync("Started");
+        await container.Response("Started");
     }
 }

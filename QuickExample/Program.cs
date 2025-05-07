@@ -8,8 +8,8 @@ using TelegramUpdater.ExceptionHandlers;
 
 await new Updater(new TelegramBotClient("BOT_TOKEN"))
     .AddExceptionHandler(new ExceptionHandler<Exception>(HandleException, inherit: true))
-    .AddScopedUpdateHandler<FormHandler, Message>()
-    .StartAsync();
+    .AddScopedUpdateHandler<FormHandler>(Telegram.Bot.Types.Enums.UpdateType.Message)
+    .Start();
 
 static Task HandleException(IUpdater updater, Exception exception)
 {
