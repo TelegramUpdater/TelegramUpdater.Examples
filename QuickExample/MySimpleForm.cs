@@ -15,10 +15,12 @@ internal class MySimpleForm : AbstractForm
 
     [MinLength(3)]
     [MaxLength(32)]
+    [FillPropertyRetry(FillingError.ValidationError, 2)]
     public string? LastName { get; set; } // can be null, It's Null-able!
 
     [Required]
     [Range(13, 120)]
+    [FillPropertyRetry(FillingError.ValidationError, 2)]
     public int Age { get; set; }
 
     public override string ToString()

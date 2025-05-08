@@ -3,7 +3,6 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using TelegramUpdater;
-using TelegramUpdater.Hosting;
 
 namespace ManualWriterWorker
 {

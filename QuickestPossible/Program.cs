@@ -3,7 +3,7 @@ using Telegram.Bot.Types.Enums;
 using TelegramUpdater;
 
 var updater = new Updater(
-    new TelegramBotClient("BotToken"),
+    new TelegramBotClient(Credentials.Credentials.BOT_TOKEN),
     new UpdaterOptions(allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery]))
 
     .AddDefaultExceptionHandler()

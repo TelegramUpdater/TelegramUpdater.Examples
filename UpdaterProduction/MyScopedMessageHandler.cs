@@ -24,7 +24,7 @@ internal class MyScopedMessageHandler : MessageHandler
             })
             .Else(async _ =>
             {
-                await container.Response("Slow", sendAsReply: false);
+                await msg.Edit("Slow");
             });
     }
 }

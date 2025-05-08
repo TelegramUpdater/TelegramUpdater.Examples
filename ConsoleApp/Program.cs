@@ -1,14 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ConsoleApp;
 using Microsoft.Extensions.Logging;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramUpdater;
 using TelegramUpdater.ExceptionHandlers;
 using TelegramUpdater.UpdateContainer;
 
 var updater = new UpdaterBuilder(
-    "BOT_TOKEN")
+    Credentials.Credentials.BOT_TOKEN)
     .StepOne(
         maxDegreeOfParallelism: 10,   // maximum update process tasks count at the same time
                                       // Eg: first 10 updates are answers quickly, but others should wait

@@ -4,6 +4,7 @@ using SurveyBot;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.Passport;
 using TelegramUpdater;
 using TelegramUpdater.FillMyForm;
 using TelegramUpdater.FillMyForm.CancelTriggers.SealedTriggers;
@@ -13,7 +14,7 @@ using TelegramUpdater.UpdateChannels.ReadyToUse;
 using TelegramUpdater.UpdateContainer;
 
 
-await new Updater(new TelegramBotClient("BOT_TOKEN"))
+await new Updater(new TelegramBotClient(Credentials.Credentials.BOT_TOKEN))
     .AddExceptionHandler<Exception>(HandleException, inherit: true) // Catch all exceptions in handlers
     .AddSingletonUpdateHandler(
         UpdateType.Message, HandleUpdate, ReadyFilters.OnCommand("survey")) // handle command /survey

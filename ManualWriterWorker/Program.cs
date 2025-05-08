@@ -7,7 +7,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddTelegramUpdater<MyManualWriter>( // Use your own manual update writer!
-            "BOT_TOKEN",
+            Credentials.Credentials.BOT_TOKEN,
             new UpdaterOptions(
                 maxDegreeOfParallelism: 2,  // maximum update process tasks count at the same time
                                             // Eg: first 10 updates are answers quickly, but others should wait

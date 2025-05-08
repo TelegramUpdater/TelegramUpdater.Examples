@@ -1,5 +1,4 @@
-﻿using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
+﻿using Telegram.Bot.Types.ReplyMarkups;
 using TelegramUpdater.FilterAttributes.Attributes;
 using TelegramUpdater.UpdateContainer;
 using TelegramUpdater.UpdateContainer.UpdateContainers;
@@ -7,7 +6,7 @@ using TelegramUpdater.UpdateHandlers.Scoped.ReadyToUse;
 
 namespace QuickestPossible.UpdateHandlers.Messages
 {
-    [Command(command:"ok")]
+    [Command(command: "ok")]
     internal sealed class StartCommandHandler : MessageHandler
     {
         protected override async Task HandleAsync(MessageContainer cntr)

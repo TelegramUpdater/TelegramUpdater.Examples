@@ -24,7 +24,7 @@ public class SimpleMessageHandler : MessageHandler
             })
             .Else(async _ =>
             {
-                await container.Edit("Slow...");
+                await msg.Edit("Slow...");
             });
     }
 }

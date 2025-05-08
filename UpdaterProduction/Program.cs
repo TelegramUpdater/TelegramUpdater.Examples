@@ -9,7 +9,7 @@ using UpdaterProduction;
 
 
 var updater = new UpdaterBuilder(
-    "BOT_TOKEN")
+    Credentials.Credentials.BOT_TOKEN)
     .StepOne(
         maxDegreeOfParallelism: 10,   // maximum update process tasks count at the same time
                                       // Eg: first 10 updates are answers quickly, but others should wait
@@ -37,7 +37,6 @@ var updater = new UpdaterBuilder(
         ReadyFilters.OnCommand("start"))
 
     .AddScopedUpdateHandler<MyScopedMessageHandler>(UpdateType.Message)
-
     .AddScopedUpdateHandler<Message>(typeof(AboutMessageHandler), UpdateType.Message); // Other way
 
 

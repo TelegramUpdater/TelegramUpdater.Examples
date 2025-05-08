@@ -10,6 +10,6 @@ internal class AboutMessageHandler : MessageHandler
 {
     protected override async Task HandleAsync(MessageContainer container)
     {
-        await Response($"*How about you?", parseMode: ParseMode.Markdown);
+        await Response($"**How about you**?", parseMode: ParseMode.Markdown);
     }
 }

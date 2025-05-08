@@ -1,3 +1,4 @@
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramUpdater;
 using TelegramUpdater.Hosting;
@@ -18,8 +19,10 @@ IHost host = Host.CreateDefaultBuilder(args)
                 allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery]),
 
             (builder) => builder
-                .Execute(updater =>
-                    updater.AddScopedUpdateHandler<SimpleMessageHandler>(UpdateType.Message))
+                // This commented piece of code won't work as it doesn't register the handler type into DI.
+                //.Execute(updater =>
+                //    updater.AddScopedUpdateHandler<SimpleMessageHandler>(UpdateType.Message))
+                .AddScopedUpdateHandler<Message>(typeof(SimpleMessageHandler), UpdateType.Message)
                 .AddDefaultExceptionHandler());
     })
     .Build();

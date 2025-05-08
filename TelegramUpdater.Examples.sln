@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdaterProduction", "Update
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerService", "WorkerService\WorkerService.csproj", "{E4D7F9D3-EC16-417F-9209-4DB7F4E41691}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credentials", "Credentials\Credentials.csproj", "{D9F83A41-C611-4D6C-932F-BDD5C3449866}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{E4D7F9D3-EC16-417F-9209-4DB7F4E41691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4D7F9D3-EC16-417F-9209-4DB7F4E41691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4D7F9D3-EC16-417F-9209-4DB7F4E41691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F83A41-C611-4D6C-932F-BDD5C3449866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F83A41-C611-4D6C-932F-BDD5C3449866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F83A41-C611-4D6C-932F-BDD5C3449866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F83A41-C611-4D6C-932F-BDD5C3449866}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
