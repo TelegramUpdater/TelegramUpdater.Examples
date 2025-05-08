@@ -4,7 +4,6 @@ using SurveyBot;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.Passport;
 using TelegramUpdater;
 using TelegramUpdater.FillMyForm;
 using TelegramUpdater.FillMyForm.CancelTriggers.SealedTriggers;
@@ -12,7 +11,6 @@ using TelegramUpdater.FillMyForm.UpdateCrackers.Crackers;
 using TelegramUpdater.Filters;
 using TelegramUpdater.UpdateChannels.ReadyToUse;
 using TelegramUpdater.UpdateContainer;
-
 
 await new Updater(new TelegramBotClient(Credentials.Credentials.BOT_TOKEN))
     .AddExceptionHandler<Exception>(HandleException, inherit: true) // Catch all exceptions in handlers
@@ -34,7 +32,7 @@ async Task HandleUpdate(IContainer<Message> ctnr)
             x => x.HowLovelyWeAre,                          // 1. Select the targeted property.
             new CallbackQueryCracker<HowLovelyWeAre>(       // 2. Create a cracker
                 new CallbackQueryChannel(                   //      2-1. Use channels to get matching update
-                    TimeSpan.FromSeconds(30),               //          2-1-1. A time out for waiting time
+                    TimeSpan.FromSeconds(5),               //          2-1-1. A time out for waiting time
                     ReadyFilters.DataMatches(@"^HLWA_")),   //          2-1-2. A filter to match callback data with given regex
                 x => x.ToHowLovelyWeAre(),                  //      2-2. Extract a value for the propery from update.
                 callbackCancelTrigger)                      //      2-3. Add a cancel trigger.
@@ -44,7 +42,7 @@ async Task HandleUpdate(IContainer<Message> ctnr)
             x => x.FoundFromWhere,
             new CallbackQueryCracker<FoundFromWhere>(       // Same.
                 new CallbackQueryChannel(
-                    TimeSpan.FromSeconds(30),
+                    TimeSpan.FromSeconds(5),
                     ReadyFilters.DataMatches(@"^FFW_")),
                 x => x.ToFoundFromWhere(),
                 callbackCancelTrigger)));
@@ -69,7 +67,7 @@ static Task HandleException(IUpdater updater, Exception exception)
     return Task.CompletedTask;
 }
 
-class MyCallbackQueryRegexFilter(string pattern): Filter<CallbackQuery>()
+class MyCallbackQueryRegexFilter(string pattern) : Filter<CallbackQuery>()
 {
     public override bool TheyShellPass(CallbackQuery input)
     {
