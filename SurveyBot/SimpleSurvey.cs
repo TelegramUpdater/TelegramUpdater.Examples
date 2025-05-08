@@ -32,8 +32,8 @@ internal class SimpleSurvey : AbstractForm
         return $"Survey result: 1. {HowLovelyWeAre}, 2. {FoundFromWhere}";
     }
 
-    public override async Task OnBeginAskAsync<TForm>(
-        FormFillerContext<TForm> fillerContext, CancellationToken cancellationToken)
+    public override async Task OnBeginAsk<TForm>(
+        FormFillingContext<TForm> fillerContext, CancellationToken cancellationToken)
     {
         if (fillerContext.PropertyName == "HowLovelyWeAre")
         {
@@ -51,9 +51,9 @@ internal class SimpleSurvey : AbstractForm
         }
     }
 
-    public override async Task OnSuccessAsync<TForm>(FormFillerContext<TForm> fillerContext, OnSuccessContext onSuccessContext, CancellationToken cancellationToken)
+    public override async Task OnSuccess<TForm>(FormFillingContext<TForm, OnSuccessContext> fillerContext, CancellationToken cancellationToken)
     {
-        switch (onSuccessContext)
+        switch (fillerContext.Context)
         {
             case { ShiningInfo.Value.CallbackQuery.Message: { } msg }:
                 {

@@ -9,12 +9,12 @@ namespace SurveyBot
             => new(
                 [
                     [
-                        InlineKeyboardButton.WithCallbackData("SuperLovely", "HLWA_4"),
-                        InlineKeyboardButton.WithCallbackData("NotBadLovely", "HLWA_3"),
+                        InlineKeyboardButton.WithCallbackData("Super Lovely", "HLWA_4"),
+                        InlineKeyboardButton.WithCallbackData("Not Bad Lovely", "HLWA_3"),
                     ],
                     [
-                        InlineKeyboardButton.WithCallbackData("NotLovely", "HLWA_2"),
-                        InlineKeyboardButton.WithCallbackData("IHateYou", "HLWA_1"),
+                        InlineKeyboardButton.WithCallbackData("Not Lovely", "HLWA_2"),
+                        InlineKeyboardButton.WithCallbackData("I Hate You", "HLWA_1"),
                     ],
                     [InlineKeyboardButton.WithCallbackData("Cancel", "cancel")]
                 ]);

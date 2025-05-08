@@ -28,7 +28,7 @@ internal class MySimpleForm : AbstractForm
         return string.Format("{0} {1}, {2} years old.", FirstName, LastName?? "", Age);
     }
 
-    public override async Task OnBeginAskAsync<TForm>(FormFillerContext<TForm> fillerContext, CancellationToken cancellationToken)
+    public override async Task OnBeginAsk<TForm>(FormFillingContext<TForm> fillerContext, CancellationToken cancellationToken)
     {
         await fillerContext.SendMessage(
             $"Please send me a value for {fillerContext.PropertyName}",
@@ -36,21 +36,21 @@ internal class MySimpleForm : AbstractForm
             cancellationToken: cancellationToken);
     }
 
-    public override Task OnSuccessAsync<TForm>(FormFillerContext<TForm> fillerContext, OnSuccessContext onSuccessContext, CancellationToken cancellationToken)
+    public override Task OnSuccess<TForm>(FormFillingContext<TForm, OnSuccessContext> fillerContext, CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
     }
 
-    public override async Task OnValidationErrorAsync<TForm>(FormFillerContext<TForm> fillerContext, ValidationErrorContext validationErrorContext, CancellationToken cancellationToken)
+    public override async Task OnValidationError<TForm>(FormFillingContext<TForm, ValidationErrorContext> fillerContext, CancellationToken cancellationToken)
     {
-        if (validationErrorContext.RequiredItemNotSupplied)
+        if (fillerContext.Context.RequiredItemNotSupplied)
         {
             await fillerContext.SendMessage($"{fillerContext.PropertyName} was required! You can't just leave it.", cancellationToken: cancellationToken);
         }
         else
         {
             await fillerContext.SendMessage($"You input is invalid for {fillerContext.PropertyName}.\n" +
-                string.Join("\n", validationErrorContext.ValidationResults.Select(
+                string.Join("\n", fillerContext.Context.ValidationResults.Select(
                     x => x.ErrorMessage)), cancellationToken: cancellationToken);
         }
     }

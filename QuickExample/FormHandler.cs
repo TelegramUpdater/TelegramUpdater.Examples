@@ -13,11 +13,10 @@ internal class FormHandler : MessageHandler
 {
     protected override async Task HandleAsync(MessageContainer updateContainer)
     {
-        var filler = new FormFiller<MySimpleForm>(
-            updateContainer.Updater,
+        var filler = updateContainer.CreateFormFiller<MySimpleForm>(
             defaultCancelTrigger: new MessageCancelTextTrigger());
 
-        var form = await filler.FillAsync(updateContainer.Sender()!);
+        var form = await filler.StartFilling(updateContainer.Sender()!);
 
         if (form is not null)
         {

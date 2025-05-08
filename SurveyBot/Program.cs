@@ -12,7 +12,10 @@ using TelegramUpdater.Filters;
 using TelegramUpdater.UpdateChannels.ReadyToUse;
 using TelegramUpdater.UpdateContainer;
 
-await new Updater(new TelegramBotClient(Credentials.Credentials.BOT_TOKEN))
+await new Updater(
+    new TelegramBotClient(Credentials.Credentials.BOT_TOKEN),
+    new UpdaterOptions(allowedUpdates: [UpdateType.Message, UpdateType.CallbackQuery])
+    ) // Don't forget to set allowed updates if you have crackers for different type of update.
     .AddExceptionHandler<Exception>(HandleException, inherit: true) // Catch all exceptions in handlers
     .AddSingletonUpdateHandler(
         UpdateType.Message, HandleUpdate, ReadyFilters.OnCommand("survey")) // handle command /survey
@@ -48,7 +51,7 @@ async Task HandleUpdate(IContainer<Message> ctnr)
                 callbackCancelTrigger)));
 
 
-    var form = await filler.FillAsync(ctnr.Sender()!); // I'm sure the sender is not null, are you?
+    var form = await filler.StartFilling(ctnr.Sender()!); // I'm sure the sender is not null, are you?
 
     if (form is not null) // Form got filled.
     {
